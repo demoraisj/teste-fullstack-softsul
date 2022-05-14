@@ -1,0 +1,17 @@
+root = true
+
+[*.{js,jsx,ts,tsx}]
+charset = utf-8
+indent_style = tab
+indent_size = 4
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+ij_typescript_spaces_within_object_literal_braces = true
+ij_typescript_spaces_within_interpolation_expressions = true
+ij_vue_spaces_within_interpolation_expressions = true
+ij_javascript_spaces_within_object_literal_braces = true
+ij_typescript_spaces_within_object_type_braces = true
+ij_any_spaces_within_braces = true
+ij_typescript_spaces_within_imports = true
+ij_javascript_spaces_within_imports = true
