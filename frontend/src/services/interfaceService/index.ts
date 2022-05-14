@@ -1,7 +1,6 @@
 import { StoreService } from '../storeService';
 
 export type InterfaceStorage = {
-	drawerOpen: boolean;
 	notifications: {
 		message: string;
 		type: 'success' | 'error' | 'info' | 'warning';
@@ -10,7 +9,6 @@ export type InterfaceStorage = {
 };
 
 export const interfaceStorageDefaults: InterfaceStorage = {
-	drawerOpen: false,
 	notifications: {
 		message: '',
 		type: 'info',
@@ -21,13 +19,6 @@ export const interfaceStorageDefaults: InterfaceStorage = {
 export class InterfaceService extends StoreService<InterfaceStorage> {
 	constructor() {
 		super(interfaceStorageDefaults);
-	}
-
-	toggleDrawerOpen() {
-		this.store.update((store) => ({
-			...store,
-			drawerOpen: !store.drawerOpen,
-		}));
 	}
 
 	notify(type: InterfaceStorage['notifications']['type'], message?: string, timeout = 5000) {
