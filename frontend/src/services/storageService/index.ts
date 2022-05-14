@@ -7,7 +7,7 @@ export class StorageService {
 		userData: 'softsul-user-data',
 	};
 
-	public clear() {
+	public static clear() {
 		localStorage.clear();
 		sessionStorage.clear();
 	}
