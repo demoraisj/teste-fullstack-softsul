@@ -12,7 +12,7 @@ import { StorageService } from './services/storageService';
 import './theme/index.scss';
 
 export type PageProperties = {
-	appUIService: InterfaceService;
+	interfaceService: InterfaceService;
 	httpService: HttpService;
 	authService: AuthService;
 	storageService: StorageService;
@@ -53,7 +53,7 @@ const App: FC = () => {
 	const storageService = new StorageService();
 	const httpService = new HttpService();
 	const appUIService = new InterfaceService();
-	const authService = new AuthService(httpService, storageService);
+	const authService = new AuthService(httpService);
 
 	return (
 		<Routes location={location}>
@@ -65,12 +65,12 @@ const App: FC = () => {
 					path={path}
 					caseSensitive
 					element={
-						<MainLayout appUIService={appUIService} authService={authService}>
+						<MainLayout>
 							<TransitionGroup component={null}>
 								<CSSTransition key={location.key} classNames="fade" timeout={300}>
 									<Component
 										routeMeta={{ path }}
-										appUIService={appUIService}
+										interfaceService={appUIService}
 										httpService={httpService}
 										authService={authService}
 										storageService={storageService}

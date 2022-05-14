@@ -13,10 +13,13 @@ type Props = {
 	items: Item[];
 	key: string;
 	columns: TableColumn[];
+	onCreateBtnClick: () => void;
+	onEditBtnClick: (item: Item) => void;
+	onDeleteBtnClick: (item: Item) => void;
 };
 
 const Table: FC<Props> = (props) => {
-	const { items, columns, key, resourceName } = props;
+	const { items, columns, key, resourceName, onDeleteBtnClick, onEditBtnClick, onCreateBtnClick } = props;
 
 	return (
 		<div className="px-4 sm:px-6 lg:px-8">
@@ -28,6 +31,7 @@ const Table: FC<Props> = (props) => {
 					<button
 						type="button"
 						className="inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto"
+						onClick={onCreateBtnClick}
 					>
 						Adicionar {resourceName}
 					</button>
@@ -67,8 +71,28 @@ const Table: FC<Props> = (props) => {
 													</td>
 												))}
 												<td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-													<span className="text-primary hover:text-primary">
+													<span
+														role="button"
+														className="text-secondary hover:text-primary mr-3"
+														onClick={() => onEditBtnClick(item)}
+														onKeyUp={(e) => {
+															if (e.key === 'Enter') onEditBtnClick(item);
+														}}
+													>
 														Editar
+													</span>
+												</td>
+
+												<td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+													<span
+														role="button"
+														className="text-secondary hover:text-primary"
+														onClick={() => onDeleteBtnClick(item)}
+														onKeyUp={(e) => {
+															if (e.key === 'Enter') onDeleteBtnClick(item);
+														}}
+													>
+														Apagar
 													</span>
 												</td>
 											</tr>

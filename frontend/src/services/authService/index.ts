@@ -1,11 +1,9 @@
-import type { AxiosError } from 'axios';
 import type { HttpService } from '../httpService';
-import type { StorageService } from '../storageService';
+import { StorageService } from '../storageService';
 
 export type LoginPayload = {
-	username: string;
+	email: string;
 	password: string;
-	accessKey?: boolean;
 };
 
 export class AuthService {
@@ -16,16 +14,8 @@ export class AuthService {
 	 */
 	private readonly httpService: HttpService;
 
-	/**
-	 * Storage service global instance
-	 *
-	 * @private
-	 */
-	private readonly storageService: StorageService;
-
-	constructor(httpService: HttpService, storageService: StorageService) {
+	constructor(httpService: HttpService) {
 		this.httpService = httpService;
-		this.storageService = storageService;
 	}
 
 	/**
@@ -37,7 +27,7 @@ export class AuthService {
 	 * @param accessKey Defines if the password is access key
 	 *
 	 */
-	public async login({ username, password, accessKey = false }: LoginPayload) {
+	public async login({ email, password }: LoginPayload) {
 		try {
 			await this.httpService.login();
 
@@ -50,7 +40,7 @@ export class AuthService {
 	public async logout() {
 		await this.httpService.logout();
 
-		this.storageService.clear();
+		StorageService.clear();
 
 		location.assign('/');
 	}
