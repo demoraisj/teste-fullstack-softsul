@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { HomeIcon, XIcon } from '@heroicons/react/outline';
+import { HomeIcon, OfficeBuildingIcon, XIcon } from '@heroicons/react/outline';
 import { useLocation } from 'react-router-dom';
 import { classNames } from '../../tools/classNames';
 import logo from '../../assets/logo-light2.png';
@@ -21,7 +21,14 @@ const Drawer: FC<Props> = (props) => {
 			name: 'Painel',
 			href: '/dashboard',
 			icon: HomeIcon,
-			current: location.pathname === '/dashboard',
+			current: location.pathname.includes('/dashboard'),
+		},
+
+		{
+			name: 'Filiais',
+			href: '/branches',
+			icon: OfficeBuildingIcon,
+			current: location.pathname.includes('/branches'),
 		},
 	];
 

@@ -10,6 +10,7 @@ type Props = {
 
 const pageTitles: Record<string, string> = {
 	'/dashboard': 'Painel',
+	'/branches': 'Filiais',
 };
 
 const MainLayout: FC<Props> = (props) => {

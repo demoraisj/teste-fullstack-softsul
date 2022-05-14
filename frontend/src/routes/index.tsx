@@ -1,7 +1,8 @@
 import type { FC } from 'react';
 import logo from '../assets/logo-light2.png';
+import type { PageProperties } from '../main';
 
-const Root: FC = () => {
+const Root: FC<PageProperties> = () => {
 	console.log();
 
 	return (

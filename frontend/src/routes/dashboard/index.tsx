@@ -1,6 +1,7 @@
 import type { FC } from 'react';
+import type { PageProperties } from '../../main';
 
-const Dashboard: FC = () => {
+const Dashboard: FC<PageProperties> = () => {
 	console.log();
 
 	return (
