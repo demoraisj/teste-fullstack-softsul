@@ -1,4 +1,4 @@
-import type { ComponentType, FC } from 'react';
+import type { ComponentType, FC, ReactComponentElement } from 'react';
 import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
@@ -50,9 +50,9 @@ const routes: RouteSet[] = Object.entries(dirs).reduce<RouteSet[]>((acc, curr) =
 const App: FC = () => {
 	const location = useLocation();
 
-	const storageService = new StorageService();
 	const httpService = new HttpService();
-	const appUIService = new InterfaceService();
+	const interfaceService = new InterfaceService();
+	const storageService = new StorageService(httpService);
 	const authService = new AuthService(httpService);
 
 	return (
@@ -65,19 +65,29 @@ const App: FC = () => {
 					path={path}
 					caseSensitive
 					element={
-						<MainLayout>
-							<TransitionGroup component={null}>
-								<CSSTransition key={location.key} classNames="fade" timeout={300}>
-									<Component
-										routeMeta={{ path }}
-										interfaceService={appUIService}
-										httpService={httpService}
-										authService={authService}
-										storageService={storageService}
-									/>
-								</CSSTransition>
-							</TransitionGroup>
-						</MainLayout>
+						['/', '/register/'].includes(path) ? (
+							<Component
+								routeMeta={{ path }}
+								interfaceService={interfaceService}
+								httpService={httpService}
+								authService={authService}
+								storageService={storageService}
+							/>
+						) : (
+							<MainLayout interfaceService={interfaceService} authService={authService}>
+								<TransitionGroup component={null}>
+									<CSSTransition key={location.key} classNames="fade" timeout={300}>
+										<Component
+											routeMeta={{ path }}
+											interfaceService={interfaceService}
+											httpService={httpService}
+											authService={authService}
+											storageService={storageService}
+										/>
+									</CSSTransition>
+								</TransitionGroup>
+							</MainLayout>
+						)
 					}
 				/>
 			))}

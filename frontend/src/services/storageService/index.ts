@@ -1,11 +1,16 @@
-export type UserData = {
-	//
-};
+import type { UserData } from '../httpService/types';
+import type { HttpService } from '../httpService';
 
 export class StorageService {
+	private readonly httpService: HttpService;
+
 	public readonly keys = {
 		userData: 'softsul-user-data',
 	};
+
+	constructor(httpService: HttpService) {
+		this.httpService = httpService;
+	}
 
 	public static clear() {
 		localStorage.clear();
@@ -16,9 +21,17 @@ export class StorageService {
 		localStorage.setItem(this.keys.userData, JSON.stringify(userData));
 	}
 
-	public getUserData() {
+	public async getUserData() {
 		const data = localStorage.getItem(this.keys.userData);
 
-		return data ? JSON.parse(data) : null;
+		if (!data) {
+			const userData = await this.httpService.userData();
+
+			this.setUserData(userData);
+
+			return userData;
+		}
+
+		return JSON.parse(data);
 	}
 }

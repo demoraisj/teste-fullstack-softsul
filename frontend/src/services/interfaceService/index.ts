@@ -1,6 +1,6 @@
 import { StoreService } from '../storeService';
 
-export type InterfaceStorage = {
+export type InterfaceStore = {
 	notifications: {
 		message: string;
 		type: 'success' | 'error' | 'info' | 'warning';
@@ -8,7 +8,7 @@ export type InterfaceStorage = {
 	};
 };
 
-export const interfaceStorageDefaults: InterfaceStorage = {
+export const interfaceStorageDefaults: InterfaceStore = {
 	notifications: {
 		message: '',
 		type: 'info',
@@ -16,12 +16,12 @@ export const interfaceStorageDefaults: InterfaceStorage = {
 	},
 };
 
-export class InterfaceService extends StoreService<InterfaceStorage> {
+export class InterfaceService extends StoreService<InterfaceStore> {
 	constructor() {
 		super(interfaceStorageDefaults);
 	}
 
-	notify(type: InterfaceStorage['notifications']['type'], message?: string, timeout = 5000) {
+	notify(type: InterfaceStore['notifications']['type'], message?: string, timeout = 5000) {
 		let messageToSet = message;
 
 		if (!messageToSet) {

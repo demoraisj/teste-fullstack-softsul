@@ -1,21 +1,19 @@
 import type { FC } from 'react';
-import { BellIcon, MenuAlt2Icon, SearchIcon } from '@heroicons/react/outline';
+import { MenuAlt2Icon, SearchIcon } from '@heroicons/react/outline';
 import { Menu, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { classNames } from '../../tools/classNames';
+import type { AuthService } from '../../services/authService';
 
 type Props = {
 	setSidebarOpen: (open: boolean) => void;
+	authService: AuthService;
 };
 
-const userNavigation = [
-	{ name: 'Seu Perfil', action: () => {} },
-	{ name: 'Configurações', action: () => {} },
-	{ name: 'Sair', action: () => {} },
-];
-
 const Header: FC<Props> = (props) => {
-	const { setSidebarOpen } = props;
+	const { setSidebarOpen, authService } = props;
+
+	const userNavigation = [{ name: 'Sair', action: () => authService.logout() }];
 
 	return (
 		<div className="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-white shadow">
@@ -48,15 +46,6 @@ const Header: FC<Props> = (props) => {
 					</form>
 				</div>
 				<div className="ml-4 flex items-center md:ml-6">
-					<button
-						type="button"
-						className="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-					>
-						<span className="sr-only">Ver Notificações</span>
-						<BellIcon className="h-6 w-6" aria-hidden="true" />
-					</button>
-
-					{/* Profile dropdown */}
 					<Menu as="div" className="ml-3 relative">
 						<div>
 							<Menu.Button className="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
@@ -83,9 +72,10 @@ const Header: FC<Props> = (props) => {
 										{({ active }) => (
 											<span
 												role="button"
+												onClick={item.action}
 												className={classNames(
 													active ? 'bg-gray-100' : '',
-													'block px-4 py-2 text-sm text-gray-700'
+													'block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100'
 												)}
 											>
 												{item.name}

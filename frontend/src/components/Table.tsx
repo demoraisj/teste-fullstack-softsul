@@ -11,7 +11,7 @@ export type TableColumn = {
 type Props = {
 	resourceName: string;
 	items: Item[];
-	key: string;
+	useAsKey: string;
 	columns: TableColumn[];
 	onCreateBtnClick: () => void;
 	onEditBtnClick: (item: Item) => void;
@@ -19,7 +19,8 @@ type Props = {
 };
 
 const Table: FC<Props> = (props) => {
-	const { items, columns, key, resourceName, onDeleteBtnClick, onEditBtnClick, onCreateBtnClick } = props;
+	const { items, columns, useAsKey, resourceName, onDeleteBtnClick, onEditBtnClick, onCreateBtnClick } =
+		props;
 
 	return (
 		<div className="px-4 sm:px-6 lg:px-8">
@@ -62,7 +63,7 @@ const Table: FC<Props> = (props) => {
 									</thead>
 									<tbody className="divide-y divide-gray-200 bg-white">
 										{items.map((item) => (
-											<tr key={item[key] as Key}>
+											<tr key={item[useAsKey] as Key}>
 												{columns.map((col) => (
 													<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
 														{typeof col.render === 'function'

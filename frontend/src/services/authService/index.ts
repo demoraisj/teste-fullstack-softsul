@@ -1,5 +1,6 @@
 import type { HttpService } from '../httpService';
 import { StorageService } from '../storageService';
+import type { RegisterPayload } from '../httpService/types';
 
 export type LoginPayload = {
 	email: string;
@@ -18,18 +19,9 @@ export class AuthService {
 		this.httpService = httpService;
 	}
 
-	/**
-	 * Authenticate the user and get the token.
-	 * A password or access key can be used.
-	 *
-	 * @param username  Student enrollment
-	 * @param password  Student password or responsible access key
-	 * @param accessKey Defines if the password is access key
-	 *
-	 */
-	public async login({ email, password }: LoginPayload) {
+	public async login(data: LoginPayload) {
 		try {
-			await this.httpService.login();
+			await this.httpService.login(data);
 
 			return true;
 		} catch (err) {
@@ -43,5 +35,15 @@ export class AuthService {
 		StorageService.clear();
 
 		location.assign('/');
+	}
+
+	public async register(payload: RegisterPayload) {
+		try {
+			await this.httpService.register(payload);
+
+			return true;
+		} catch (err) {
+			return false;
+		}
 	}
 }

@@ -3,9 +3,14 @@ import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Drawer from './components/Drawer';
 import Header from './components/Header';
+import Notification from './components/Notification';
+import type { InterfaceService } from '../services/interfaceService';
+import type { AuthService } from '../services/authService';
 
 type Props = {
 	children: ReactNode;
+	interfaceService: InterfaceService;
+	authService: AuthService;
 };
 
 const pageTitles: Record<string, string> = {
@@ -14,7 +19,7 @@ const pageTitles: Record<string, string> = {
 };
 
 const MainLayout: FC<Props> = (props) => {
-	const { children } = props;
+	const { children, interfaceService, authService } = props;
 
 	const location = useLocation();
 
@@ -23,9 +28,10 @@ const MainLayout: FC<Props> = (props) => {
 	return (
 		<div className="main-layout">
 			<Drawer sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+			<Notification interfaceService={interfaceService} />
 
 			<div className="md:pl-64 flex flex-col">
-				<Header setSidebarOpen={setSidebarOpen} />
+				<Header setSidebarOpen={setSidebarOpen} authService={authService} />
 
 				<main className="flex-1">
 					<div className="py-6">
