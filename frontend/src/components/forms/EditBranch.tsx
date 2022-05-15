@@ -4,20 +4,28 @@ import { Dialog, Transition } from '@headlessui/react';
 import { CheckIcon } from '@heroicons/react/outline';
 import type { Branch } from '../../services/httpService/types';
 import Input from '../Input';
+import type { HttpService } from '../../services/httpService';
 
 type Props = {
 	item: Branch | null;
 	open: boolean;
 	setOpen: (open: boolean) => void;
+	httpService: HttpService;
 };
 
 const emptyForm: Branch = {
 	id: 0,
 	name: '',
+	email: '',
+	address: '',
+	city: '',
+	cnpj: '',
+	lat: 0,
+	lng: 0,
 };
 
 const EditBranch: FC<Props> = (props) => {
-	const { item, open, setOpen } = props;
+	const { item, open, setOpen, httpService } = props;
 
 	const [form, setForm] = useState<Branch>(emptyForm);
 
@@ -29,7 +37,13 @@ const EditBranch: FC<Props> = (props) => {
 		setForm({ ...form, [key]: value });
 	}
 
-	function save() {
+	async function save() {
+		if (isEditing) {
+			await httpService.updateBranch(item.id, form);
+		} else {
+			await httpService.createBranch(form);
+		}
+
 		setOpen(false);
 	}
 
@@ -64,23 +78,93 @@ const EditBranch: FC<Props> = (props) => {
 									<div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
 										<CheckIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
 									</div>
-									<div className="mt-3 text-center sm:mt-5">
+									<div className="mt-3 sm:mt-5">
 										<Dialog.Title
 											as="h3"
-											className="text-lg leading-6 font-medium text-gray-900"
+											className="text-lg text-center leading-6 font-medium text-gray-900"
 										>
 											{isEditing ? `Editando Filial: ${item.name}` : 'Criando Filial'}
 										</Dialog.Title>
 										<div className="mt-2">
 											<form name="branch">
-												<Input
-													name="name"
-													label="Nome"
-													value={form.name}
-													type="text"
-													setter={(value) => setFormData('name', value)}
-													ref={initialFocusRef}
-												/>
+												<div className="grid grid-cols-2 space-y-3">
+													<div className="col-span-2">
+														<Input
+															name="name"
+															label="Nome"
+															value={form.name}
+															type="text"
+															setter={(value) => setFormData('name', value)}
+															ref={initialFocusRef}
+														/>
+													</div>
+
+													<div className="col-span-1 mr-2">
+														<Input
+															name="email"
+															label="Email"
+															value={form.email}
+															type="email"
+															setter={(value) => setFormData('email', value)}
+															ref={initialFocusRef}
+														/>
+													</div>
+
+													<div className="col-span-1 ml-2">
+														<Input
+															name="city"
+															label="Cidade"
+															value={form.city}
+															type="text"
+															setter={(value) => setFormData('city', value)}
+															ref={initialFocusRef}
+														/>
+													</div>
+
+													<div className="col-span-1 mr-2">
+														<Input
+															name="address"
+															label="Endereço"
+															value={form.address}
+															type="text"
+															setter={(value) => setFormData('address', value)}
+															ref={initialFocusRef}
+														/>
+													</div>
+
+													<div className="col-span-1 ml-2">
+														<Input
+															name="cnpj"
+															label="CNPJ"
+															value={form.cnpj}
+															type="text"
+															setter={(value) => setFormData('cnpj', value)}
+															ref={initialFocusRef}
+														/>
+													</div>
+
+													<div className="col-span-1 mr-2">
+														<Input
+															name="lat"
+															label="Latitude"
+															value={form.lat}
+															type="text"
+															setter={(value) => setFormData('lat', value)}
+															ref={initialFocusRef}
+														/>
+													</div>
+
+													<div className="col-span-1 ml-2">
+														<Input
+															name="lng"
+															label="Longitude"
+															value={form.lng}
+															type="text"
+															setter={(value) => setFormData('lng', value)}
+															ref={initialFocusRef}
+														/>
+													</div>
+												</div>
 											</form>
 										</div>
 									</div>

@@ -50,8 +50,8 @@ const routes: RouteSet[] = Object.entries(dirs).reduce<RouteSet[]>((acc, curr) =
 const App: FC = () => {
 	const location = useLocation();
 
-	const httpService = new HttpService();
 	const interfaceService = new InterfaceService();
+	const httpService = new HttpService(interfaceService);
 	const storageService = new StorageService(httpService);
 	const authService = new AuthService(httpService);
 

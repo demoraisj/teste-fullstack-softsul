@@ -3,9 +3,9 @@ import type { FC, Ref } from 'react';
 type Props = {
 	name: string;
 	label: string;
-	value: string;
+	value: string | number;
 	type: string;
-	setter: (value: string) => void;
+	setter: (value: string | number) => void;
 	autoComplete?: string;
 	required?: boolean;
 	ref?: Ref<any>;

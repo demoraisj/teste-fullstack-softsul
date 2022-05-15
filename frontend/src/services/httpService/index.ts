@@ -2,6 +2,7 @@ import type { AxiosInstance, AxiosError } from 'axios';
 import axios from 'axios';
 import type { Branch, RegisterPayload, UserData } from './types';
 import type { LoginPayload } from '../authService';
+import type { InterfaceService } from '../interfaceService';
 
 const headers = {
 	'Content-Type': 'application/json',
@@ -9,9 +10,13 @@ const headers = {
 };
 
 export class HttpService {
-	backend: AxiosInstance;
+	private readonly interfaceService: InterfaceService;
 
-	constructor() {
+	readonly backend: AxiosInstance;
+
+	constructor(interfaceService: InterfaceService) {
+		this.interfaceService = interfaceService;
+
 		this.backend = axios.create({
 			baseURL: import.meta.env.PUBLIC_BACKEND_URL,
 			withCredentials: true,
@@ -86,11 +91,19 @@ export class HttpService {
 	}
 
 	public async updateBranch(id: number, data: Branch) {
-		const url = `/api/branches/${id}`;
+		try {
+			const url = `/api/branches/${id}`;
 
-		const res = await this.backend.put(url, data);
+			const res = await this.backend.put(url, data);
 
-		return res.data;
+			this.interfaceService.notify('success', 'Filial atualziada.');
+
+			return res.data;
+		} catch (err) {
+			const axiosError = err as AxiosError;
+
+			this.interfaceService.notify('error', 'Erro ao atualizar filial.');
+		}
 	}
 
 	public async deleteBranch(id: number) {
