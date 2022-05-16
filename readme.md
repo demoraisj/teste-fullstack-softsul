@@ -8,6 +8,10 @@
  - Execute ```docker-compose up --detach --build```
  - Depois que os container estiverem ativos, execute ```docker exec -it laravel php artisan migrate```
 
+<br />
+
+Se houver conflito de portas, existem configurações no arquivo .env na raíz dessse proeto que podem ser alteradas, rode um down e novamente um up no docker-compose em seguida.
+
 # Bibliotecas utilizadas
 
 O frontend roda em React, o backend em laravel. <br />
