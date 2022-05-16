@@ -1,3 +1,4 @@
+import type { AxiosError } from 'axios';
 import type { HttpService } from '../httpService';
 import { StorageService } from '../storageService';
 import type { RegisterPayload } from '../httpService/types';
@@ -26,7 +27,7 @@ export class AuthService {
 
 			return true;
 		} catch (err) {
-			return false;
+			return (err as AxiosError).response?.status === 302;
 		}
 	}
 

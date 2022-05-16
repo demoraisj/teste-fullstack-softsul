@@ -1,27 +1,14 @@
 import type { FC } from 'react';
-import { useRef, Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { DocumentTextIcon, EyeIcon } from '@heroicons/react/solid';
+import { EyeIcon } from '@heroicons/react/solid';
 import type { Branch } from '../../services/httpService/types';
-import Input from '../Input';
-import { useSafeEffect } from '../../hooks/useSafeEffect';
 import { cnpj } from '../../tools/masks';
 
 type Props = {
 	item: Branch | null;
 	open: boolean;
 	setOpen: (open: boolean) => void;
-};
-
-const emptyForm: Branch = {
-	id: 0,
-	name: '',
-	email: '',
-	address: '',
-	city: '',
-	cnpj: '',
-	lat: 0,
-	lng: 0,
 };
 
 const ShowBranch: FC<Props> = (props) => {

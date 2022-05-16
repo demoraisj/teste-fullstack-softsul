@@ -5,9 +5,10 @@ import logo from '../assets/logo-light2.png';
 import type { PageProperties } from '../main';
 import Input from '../components/Input';
 import type { RegisterPayload } from '../services/httpService/types';
+import { useSafeEffect } from '../hooks/useSafeEffect';
 
 const Root: FC<PageProperties> = (props) => {
-	const { authService, interfaceService } = props;
+	const { authService, interfaceService, httpService } = props;
 
 	const [isRegistering, setIsRegistering] = useState(false);
 	const [error, setError] = useState('');
@@ -64,6 +65,15 @@ const Root: FC<PageProperties> = (props) => {
 			setError('Email ou senha incorretos.');
 		}
 	}
+
+	useSafeEffect(() => {
+		httpService.userData().then((user) => {
+			if (user) {
+				nav('/dashboard');
+			}
+		});
+	}, []);
+
 	return (
 		<div className="min-h-full h-screen bg-secondary flex flex-col justify-center items-center py-12 sm:px-6 lg:px-8">
 			<div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -85,7 +95,7 @@ const Root: FC<PageProperties> = (props) => {
 								type="text"
 								autoComplete="name"
 								value={form.name}
-								setter={(value) => setFormData('name', value)}
+								setter={(value) => setFormData('name', value as string)}
 								required
 							/>
 						)}
@@ -96,7 +106,7 @@ const Root: FC<PageProperties> = (props) => {
 							type="email"
 							autoComplete="email"
 							value={form.email}
-							setter={(value) => setFormData('email', value)}
+							setter={(value) => setFormData('email', value as string)}
 							required
 						/>
 
@@ -106,7 +116,7 @@ const Root: FC<PageProperties> = (props) => {
 							type="password"
 							autoComplete="current-password"
 							value={form.password}
-							setter={(value) => setFormData('password', value)}
+							setter={(value) => setFormData('password', value as string)}
 							required
 						/>
 
@@ -117,7 +127,7 @@ const Root: FC<PageProperties> = (props) => {
 								type="password"
 								autoComplete="confirm-password"
 								value={form.password_confirmation}
-								setter={(value) => setFormData('password_confirmation', value)}
+								setter={(value) => setFormData('password_confirmation', value as string)}
 								required
 							/>
 						)}

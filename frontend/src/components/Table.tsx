@@ -1,4 +1,4 @@
-import type { FC, Key, ReactNode } from 'react';
+import type { FC, Key, ReactNode, JSXElementConstructor } from 'react';
 import { SearchIcon } from '@heroicons/react/outline';
 import { useState } from 'react';
 
@@ -19,6 +19,7 @@ type Props = {
 	onEditBtnClick: (item: Item) => void;
 	onDeleteBtnClick: (item: Item) => void;
 	onVisualizeBtnClick: (item: Item) => void;
+	ExtraButtons?: JSXElementConstructor<{ item: any }>;
 	filter: {
 		propName: string;
 		propUserFriendlyName: string;
@@ -35,6 +36,7 @@ const Table: FC<Props> = (props) => {
 		onEditBtnClick,
 		onCreateBtnClick,
 		onVisualizeBtnClick,
+		ExtraButtons,
 		filter,
 	} = props;
 
@@ -131,6 +133,10 @@ const Table: FC<Props> = (props) => {
 												))}
 
 												<td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+													{typeof ExtraButtons === 'function' && (
+														<ExtraButtons item={item} />
+													)}
+
 													<span
 														role="button"
 														className="text-secondary hover:text-primary mr-3 p-1 border border-gray-200 rounded-md hover:border-primary"
@@ -179,6 +185,10 @@ const Table: FC<Props> = (props) => {
 			)}
 		</div>
 	);
+};
+
+Table.defaultProps = {
+	ExtraButtons: undefined,
 };
 
 export default Table;
