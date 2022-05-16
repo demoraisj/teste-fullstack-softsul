@@ -28,10 +28,14 @@ export class HttpService {
 			async (err) => {
 				const axiosError = err as AxiosError;
 				const ignoreReqFor = ['/api/login', '/api/register'];
+				const ignorePaths = ['/'];
+
+				const { pathname } = window.location;
 
 				const isAuthRequest = ignoreReqFor.some((url) => axiosError.config.url?.includes(url));
+				const isIgnoredPath = ignorePaths.some((url) => pathname.includes(url));
 
-				if (axiosError.response?.status === 401 && !isAuthRequest) {
+				if (axiosError.response?.status === 401 && !isAuthRequest && !isIgnoredPath) {
 					location.replace('/');
 				}
 
