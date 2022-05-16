@@ -25,4 +25,4 @@ No frontend, foram usadas as bibliotecas (além do react):
  - [axios](https://axios-http.com/ptbr/) - para requisições http
  - [date-fns](https://date-fns.org/) - para manipulação de datas
  - [react-transition-group](https://reactcommunity.org/react-transition-group/docs) - para animações de transição
- - [svelte](https://svelte.dev/) - para implementação de stores sbserváveis, apenas. (svelte/store)
+ - [svelte](https://svelte.dev/) - para implementação de stores observáveis, apenas. (svelte/store)
