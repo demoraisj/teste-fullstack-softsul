@@ -1,17 +1,15 @@
 /* eslint-disable react/no-unstable-nested-components */
 import type { FC } from 'react';
 import { useState } from 'react';
-import { SearchIcon } from '@heroicons/react/outline';
-import { useNavigate } from 'react-router-dom';
 import type { PageProperties } from '../../main';
 import type { TableColumn } from '../../components/Table';
 import Table from '../../components/Table';
-import EditBranch from '../../components/forms/EditBranch';
+import EditBranch from './modals/EditBranch';
 import type { Branch } from '../../services/httpService/types';
 import { useIntervalEffect } from '../../hooks/useIntervalEffect';
 import { cnpj } from '../../tools/masks';
-import ShowBranch from '../../components/visualizers/ShowBranch';
-import LocationModal from './components/LocationModal';
+import ShowBranch from './modals/ShowBranch';
+import LocationModal from './modals/LocationModal';
 
 const columns: TableColumn<Branch>[] = [
 	{
@@ -36,23 +34,6 @@ const columns: TableColumn<Branch>[] = [
 		),
 	},
 ];
-
-const LocationButton: FC<{ item: Branch }> = ({ item }) => {
-	const nav = useNavigate();
-
-	return (
-		<span
-			role="button"
-			className="text-secondary hover:text-primary mr-3 p-1 border border-gray-200 rounded-md hover:border-primary"
-			onClick={() => nav(`/branches/${item.id}/location`)}
-			onKeyUp={(e) => {
-				if (e.key === 'Enter') nav(`/branches/${item.id}/location`);
-			}}
-		>
-			Localizar
-		</span>
-	);
-};
 
 const Branches: FC<PageProperties> = (props) => {
 	const { httpService } = props;
@@ -79,6 +60,11 @@ const Branches: FC<PageProperties> = (props) => {
 			setShowModalOpen(true);
 		},
 
+		location(branch: Branch) {
+			setSelectedBranch(branch);
+			setLocationModalOpen(true);
+		},
+
 		async delete(branch: Branch) {
 			await httpService.deleteBranch(branch);
 
@@ -103,7 +89,18 @@ const Branches: FC<PageProperties> = (props) => {
 					onCreateBtnClick={() => actions.create()}
 					onVisualizeBtnClick={(i) => actions.show(i as Branch)}
 					filter={{ propName: 'name', propUserFriendlyName: 'Nome' }}
-					ExtraButtons={LocationButton}
+					ExtraBtns={({ item }) => (
+						<span
+							role="button"
+							className="text-secondary hover:text-primary mr-3 p-1 border border-gray-200 rounded-md hover:border-primary"
+							onClick={() => actions.location(item as Branch)}
+							onKeyUp={(e) => {
+								if (e.key === 'Enter') actions.location(item as Branch);
+							}}
+						>
+							Ver no mapa
+						</span>
+					)}
 				/>
 			</div>
 

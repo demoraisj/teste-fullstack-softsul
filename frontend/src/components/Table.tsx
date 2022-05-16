@@ -19,7 +19,7 @@ type Props = {
 	onEditBtnClick: (item: Item) => void;
 	onDeleteBtnClick: (item: Item) => void;
 	onVisualizeBtnClick: (item: Item) => void;
-	ExtraButtons?: JSXElementConstructor<{ item: any }>;
+	ExtraBtns?: JSXElementConstructor<{ item: any }>;
 	filter: {
 		propName: string;
 		propUserFriendlyName: string;
@@ -36,7 +36,7 @@ const Table: FC<Props> = (props) => {
 		onEditBtnClick,
 		onCreateBtnClick,
 		onVisualizeBtnClick,
-		ExtraButtons,
+		ExtraBtns,
 		filter,
 	} = props;
 
@@ -133,8 +133,8 @@ const Table: FC<Props> = (props) => {
 												))}
 
 												<td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-													{typeof ExtraButtons === 'function' && (
-														<ExtraButtons item={item} />
+													{typeof ExtraBtns === 'function' && (
+														<ExtraBtns item={item} />
 													)}
 
 													<span
@@ -145,7 +145,7 @@ const Table: FC<Props> = (props) => {
 															if (e.key === 'Enter') onVisualizeBtnClick(item);
 														}}
 													>
-														Visualizar
+														Detalhes
 													</span>
 
 													<span
@@ -188,7 +188,7 @@ const Table: FC<Props> = (props) => {
 };
 
 Table.defaultProps = {
-	ExtraButtons: undefined,
+	ExtraBtns: undefined,
 };
 
 export default Table;

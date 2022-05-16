@@ -2,8 +2,8 @@ import type { FC } from 'react';
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { EyeIcon } from '@heroicons/react/solid';
-import type { Branch } from '../../services/httpService/types';
-import { cnpj } from '../../tools/masks';
+import type { Branch } from '../../../services/httpService/types';
+import { cnpj } from '../../../tools/masks';
 
 type Props = {
 	item: Branch | null;

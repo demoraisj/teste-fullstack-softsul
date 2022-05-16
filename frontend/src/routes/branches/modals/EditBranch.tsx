@@ -2,11 +2,11 @@ import type { FC } from 'react';
 import { useRef, Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { DocumentTextIcon } from '@heroicons/react/solid';
-import type { Branch } from '../../services/httpService/types';
-import Input from '../Input';
-import type { HttpService } from '../../services/httpService';
-import { useSafeEffect } from '../../hooks/useSafeEffect';
-import { cnpj } from '../../tools/masks';
+import type { Branch } from '../../../services/httpService/types';
+import Input from '../../../components/Input';
+import type { HttpService } from '../../../services/httpService';
+import { useSafeEffect } from '../../../hooks/useSafeEffect';
+import { cnpj } from '../../../tools/masks';
 
 type Props = {
 	item: Branch | null;

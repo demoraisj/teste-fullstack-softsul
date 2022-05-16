@@ -1,8 +1,7 @@
 import type { FC } from 'react';
-import { Fragment, useCallback, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { EyeIcon } from '@heroicons/react/solid';
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import { EyeIcon, MapIcon } from '@heroicons/react/solid';
 import type { Branch } from '../../../services/httpService/types';
 
 type Props = {
@@ -11,35 +10,23 @@ type Props = {
 	setOpen: (open: boolean) => void;
 };
 
-const containerStyle = {
-	width: '400px',
-	height: '400px',
-};
+const apiKey = 'AIzaSyC4Oi8RTLEWtaFcqahMI-Wf2rNE8k1jYO0';
 
 const LocationModal: FC<Props> = (props) => {
 	const { item, open, setOpen } = props;
 
-	const [mapState, setMapState] = useState<any>(null);
+	const [loaded, setLoaded] = useState(false);
 
 	const center = {
-		lat: item?.lat ?? 16.47202632837422,
-		lng: item?.lng ?? -54.593890108907516,
+		lat: item?.lat ? Number(item?.lat) : 16.47202632837422,
+		lng: item?.lng ? Number(item?.lng) : -54.593890108907516,
 	};
 
-	const { isLoaded } = useJsApiLoader({
-		id: 'google-map-script',
-		googleMapsApiKey: 'AIzaSyB05Ieyk7qNn8KWFwOnHEqCbGcYVoI_Kfw',
-	});
-
-	const onLoad = useCallback((map: any) => {
-		const bounds = new window.google.maps.LatLngBounds(center);
-		map.fitBounds(bounds);
-		setMapState(map);
-	}, []);
-
-	const onUnmount = useCallback(() => {
-		setMapState(null);
-	}, []);
+	useEffect(() => {
+		if (!open) {
+			setLoaded(false);
+		}
+	}, [item, open]);
 
 	return (
 		<Transition.Root show={open} as={Fragment}>
@@ -70,7 +57,7 @@ const LocationModal: FC<Props> = (props) => {
 							<Dialog.Panel className="relative bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-3xl sm:w-full sm:p-6">
 								<div>
 									<div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
-										<EyeIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
+										<MapIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
 									</div>
 									<div className="mt-3 sm:mt-5">
 										<Dialog.Title
@@ -80,17 +67,26 @@ const LocationModal: FC<Props> = (props) => {
 											Localização da filial {item?.name}
 										</Dialog.Title>
 										<div className="mt-2">
-											{isLoaded ? (
-												<GoogleMap
-													mapContainerStyle={containerStyle}
-													center={center}
-													zoom={10}
-													onLoad={onLoad}
-													onUnmount={onUnmount}
+											{open && (
+												<iframe
+													title="map"
+													width="100%"
+													height="500px"
+													style={{ border: '0' }}
+													hidden={!loaded}
+													allowFullScreen
+													referrerPolicy="no-referrer-when-downgrade"
+													onLoad={() => setLoaded(true)}
+													src={`https://www.google.com/maps/embed/v1/place?key=${apiKey}&q=${center.lat},${center.lng}&zoom=15&language=pt-BR`}
 												/>
-											) : (
-												<div className="flex justify-center">
-													<div className="spinner" />
+											)}
+
+											{!loaded && (
+												<div
+													className="flex items-center justify-center"
+													style={{ height: '500px' }}
+												>
+													<span>Carregando mapa...</span>
 												</div>
 											)}
 										</div>
