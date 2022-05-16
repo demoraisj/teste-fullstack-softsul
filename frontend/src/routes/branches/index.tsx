@@ -6,6 +6,8 @@ import Table from '../../components/Table';
 import EditBranch from '../../components/forms/EditBranch';
 import type { Branch } from '../../services/httpService/types';
 import { useIntervalEffect } from '../../hooks/useIntervalEffect';
+import { cnpj } from '../../tools/masks';
+import ShowBranch from '../../components/visualizers/ShowBranch';
 
 const columns: TableColumn<Branch>[] = [
 	{
@@ -15,7 +17,7 @@ const columns: TableColumn<Branch>[] = [
 
 	{
 		title: 'CNPJ',
-		render: 'cnpj',
+		render: (branch: Branch) => cnpj.mask(branch.cnpj),
 	},
 
 	{
@@ -35,6 +37,7 @@ const Branches: FC<PageProperties> = (props) => {
 	const { httpService } = props;
 
 	const [editModalOpen, setEditModalOpen] = useState(false);
+	const [showModalOpen, setShowModalOpen] = useState(false);
 	const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
 	const [branches, setBranches] = useState<Branch[]>([]);
 
@@ -47,6 +50,11 @@ const Branches: FC<PageProperties> = (props) => {
 		edit(branch: Branch) {
 			setSelectedBranch(branch);
 			setEditModalOpen(true);
+		},
+
+		show(branch: Branch) {
+			setSelectedBranch(branch);
+			setShowModalOpen(true);
 		},
 
 		async delete(branch: Branch) {
@@ -71,6 +79,7 @@ const Branches: FC<PageProperties> = (props) => {
 					onDeleteBtnClick={(i) => actions.delete(i as Branch)}
 					onEditBtnClick={(i) => actions.edit(i as Branch)}
 					onCreateBtnClick={() => actions.create()}
+					onVisualizeBtnClick={(i) => actions.show(i as Branch)}
 				/>
 			</div>
 
@@ -82,6 +91,8 @@ const Branches: FC<PageProperties> = (props) => {
 				setList={setBranches}
 				httpService={httpService}
 			/>
+
+			<ShowBranch item={selectedBranch} open={showModalOpen} setOpen={setShowModalOpen} />
 		</div>
 	);
 };

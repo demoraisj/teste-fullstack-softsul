@@ -27,7 +27,7 @@ class StoreBranchRequest extends FormRequest
             'name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'city' => 'required|string|max:255',
-            'cnpj' => 'required|string|max:255',
+            'cnpj' => 'required|string|size:14',
             'email' => 'required|string|max:255',
             'lat' => 'required|numeric|between:-90,90',
             'lng' => 'required|numeric|between:-180,180',

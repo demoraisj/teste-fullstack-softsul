@@ -16,11 +16,20 @@ type Props = {
 	onCreateBtnClick: () => void;
 	onEditBtnClick: (item: Item) => void;
 	onDeleteBtnClick: (item: Item) => void;
+	onVisualizeBtnClick: (item: Item) => void;
 };
 
 const Table: FC<Props> = (props) => {
-	const { items, columns, useAsKey, resourceName, onDeleteBtnClick, onEditBtnClick, onCreateBtnClick } =
-		props;
+	const {
+		items,
+		columns,
+		useAsKey,
+		resourceName,
+		onDeleteBtnClick,
+		onEditBtnClick,
+		onCreateBtnClick,
+		onVisualizeBtnClick,
+	} = props;
 
 	return (
 		<div className="px-4 sm:px-6 lg:px-8">
@@ -78,6 +87,17 @@ const Table: FC<Props> = (props) => {
 												))}
 
 												<td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+													<span
+														role="button"
+														className="text-secondary hover:text-primary mr-3 p-1 border border-gray-200 rounded-md hover:border-primary"
+														onClick={() => onVisualizeBtnClick(item)}
+														onKeyUp={(e) => {
+															if (e.key === 'Enter') onVisualizeBtnClick(item);
+														}}
+													>
+														Visualizar
+													</span>
+
 													<span
 														role="button"
 														className="text-secondary hover:text-primary mr-3 p-1 border border-gray-200 rounded-md hover:border-primary"

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('city');
-            $table->string('cnpj');
+            $table->string('cnpj', 14);
             $table->string('address');
             $table->string('email');
             $table->decimal('lat', 10, 8);
