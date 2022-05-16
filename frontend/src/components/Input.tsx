@@ -8,20 +8,20 @@ type Props = {
 	setter: (value: string | number) => void;
 	autoComplete?: string;
 	required?: boolean;
-	ref?: Ref<any>;
+	reactRef?: Ref<any>;
 };
 
 const Input: FC<Props> = (props) => {
-	const { name, label, value, type, setter, ref, autoComplete, required } = props;
+	const { name, label, value, type, setter, reactRef, autoComplete, required } = props;
 
 	return (
 		<div>
 			<label htmlFor={name} className="block text-sm font-medium text-gray-700">
-				{label}
+				{label} {required && <span className="text-red-600">*</span>}
 			</label>
 			<div className="mt-1">
 				<input
-					ref={ref}
+					ref={reactRef}
 					type={type}
 					name={name}
 					id={name}
@@ -39,7 +39,7 @@ const Input: FC<Props> = (props) => {
 Input.defaultProps = {
 	autoComplete: 'off',
 	required: false,
-	ref: undefined,
+	reactRef: undefined,
 };
 
 export default Input;

@@ -21,6 +21,7 @@ export class AuthService {
 
 	public async login(data: LoginPayload) {
 		try {
+			await this.httpService.csrf();
 			await this.httpService.login(data);
 
 			return true;
@@ -39,6 +40,7 @@ export class AuthService {
 
 	public async register(payload: RegisterPayload) {
 		try {
+			await this.httpService.csrf();
 			await this.httpService.register(payload);
 
 			return true;

@@ -27,6 +27,7 @@ class Branch extends Model
     ];
 
     public $visible = [
+        'id',
         'name',
         'city',
         'cnpj',
@@ -34,5 +35,7 @@ class Branch extends Model
         'email',
         'lat',
         'lng',
+        'created_at',
+        'updated_at',
     ];
 }

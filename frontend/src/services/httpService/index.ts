@@ -25,7 +25,7 @@ export class HttpService {
 
 		this.backend.interceptors.response.use(
 			(res) => res,
-			(err) => {
+			async (err) => {
 				const axiosError = err as AxiosError;
 				const ignoreReqFor = ['/api/login', '/api/register'];
 
@@ -33,6 +33,12 @@ export class HttpService {
 
 				if (axiosError.response?.status === 401 && !isAuthRequest) {
 					location.replace('/');
+				}
+
+				if (axiosError.response?.status === 419 && !isAuthRequest) {
+					await this.csrf();
+
+					location.reload();
 				}
 
 				return Promise.reject(err);
@@ -67,48 +73,92 @@ export class HttpService {
 	/* BRANCH requests */
 
 	public async indexBranches() {
-		const url = '/api/branches';
+		try {
+			const url = '/api/branches';
 
-		const res = await this.backend.get(url);
+			const res = await this.backend.get(url);
 
-		return res.data;
+			return res.data;
+		} catch (err) {
+			this.interfaceService.notify('error', 'Erro ao buscar filiais.');
+
+			throw err;
+		}
 	}
 
 	public async showBranch(id: number) {
-		const url = `/api/branches/${id}`;
-
-		const res = await this.backend.get(url);
-
-		return res.data;
-	}
-
-	public async createBranch(data: Branch) {
-		const url = '/api/branches';
-
-		const res = await this.backend.post(url, data);
-
-		return res.data;
-	}
-
-	public async updateBranch(id: number, data: Branch) {
 		try {
 			const url = `/api/branches/${id}`;
 
-			const res = await this.backend.put(url, data);
+			const res = await this.backend.get(url);
+
+			return res.data;
+		} catch (err) {
+			this.interfaceService.notify('success', 'Erro ao buscar dados da filial');
+
+			throw err;
+		}
+	}
+
+	public async createBranch(branch: Branch) {
+		try {
+			const url = '/api/branches';
+
+			const res = await this.backend.post(url, branch);
+
+			this.interfaceService.notify('success', 'Filial criada.');
+
+			return res.data;
+		} catch (err) {
+			const axiosError = err as AxiosError<{ message: string }>;
+
+			if (axiosError.response?.status === 422) {
+				const message = axiosError.response?.data.message;
+
+				this.interfaceService.notify('warning', message);
+				throw err;
+			}
+
+			this.interfaceService.notify('error', 'Erro ao criar filial.');
+			throw err;
+		}
+	}
+
+	public async updateBranch(branch: Branch) {
+		try {
+			const url = `/api/branches/${branch.id}`;
+
+			const res = await this.backend.put(url, branch);
 
 			this.interfaceService.notify('success', 'Filial atualziada.');
 
 			return res.data;
 		} catch (err) {
-			const axiosError = err as AxiosError;
+			const axiosError = err as AxiosError<{ message: string }>;
+
+			if (axiosError.response?.status === 422) {
+				const message = axiosError.response?.data.message;
+
+				this.interfaceService.notify('warning', message);
+				throw err;
+			}
 
 			this.interfaceService.notify('error', 'Erro ao atualizar filial.');
+			throw err;
 		}
 	}
 
-	public async deleteBranch(id: number) {
-		const url = `/api/branches/${id}`;
+	public async deleteBranch(branch: Branch) {
+		try {
+			const url = `/api/branches/${branch.id}`;
 
-		await this.backend.delete(url);
+			await this.backend.delete(url);
+
+			this.interfaceService.notify('success', 'Filial deletada.');
+		} catch (err) {
+			this.interfaceService.notify('error', 'Erro ao deletar filial.');
+
+			throw err;
+		}
 	}
 }

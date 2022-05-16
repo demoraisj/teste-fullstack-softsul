@@ -2,9 +2,9 @@ import type { FC, Key, ReactNode } from 'react';
 
 type Item = Record<string, unknown>;
 
-export type TableColumn = {
+export type TableColumn<I = Item> = {
 	title: string;
-	render: ((item: Item) => ReactNode) | string;
+	render: ((item: I) => ReactNode) | string;
 	className?: string;
 };
 
@@ -12,7 +12,7 @@ type Props = {
 	resourceName: string;
 	items: Item[];
 	useAsKey: string;
-	columns: TableColumn[];
+	columns: TableColumn<any>[];
 	onCreateBtnClick: () => void;
 	onEditBtnClick: (item: Item) => void;
 	onDeleteBtnClick: (item: Item) => void;
@@ -47,10 +47,12 @@ const Table: FC<Props> = (props) => {
 								<table className="min-w-full divide-y divide-gray-300">
 									<thead className="bg-gray-50">
 										<tr>
-											{columns.map((col) => (
+											{columns.map((col, idx) => (
 												<th
 													scope="col"
-													className={`text-left text-sm font-semibold text-gray-900 ${col.className}`}
+													className={`text-left text-sm font-semibold text-gray-900 ${
+														idx === 0 && 'pl-2'
+													} ${col.className}`}
 													key={col.title}
 												>
 													{col.title}
@@ -65,16 +67,20 @@ const Table: FC<Props> = (props) => {
 										{items.map((item) => (
 											<tr key={item[useAsKey] as Key}>
 												{columns.map((col) => (
-													<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+													<td
+														className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+														key={`${col.title}-${item[useAsKey]}`}
+													>
 														{typeof col.render === 'function'
 															? col.render(item)
 															: (item[col.render] as ReactNode)}
 													</td>
 												))}
+
 												<td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
 													<span
 														role="button"
-														className="text-secondary hover:text-primary mr-3"
+														className="text-secondary hover:text-primary mr-3 p-1 border border-gray-200 rounded-md hover:border-primary"
 														onClick={() => onEditBtnClick(item)}
 														onKeyUp={(e) => {
 															if (e.key === 'Enter') onEditBtnClick(item);
@@ -82,12 +88,10 @@ const Table: FC<Props> = (props) => {
 													>
 														Editar
 													</span>
-												</td>
 
-												<td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
 													<span
 														role="button"
-														className="text-secondary hover:text-primary"
+														className="text-secondary hover:text-primary p-1 border border-gray-200 rounded-md hover:border-primary"
 														onClick={() => onDeleteBtnClick(item)}
 														onKeyUp={(e) => {
 															if (e.key === 'Enter') onDeleteBtnClick(item);

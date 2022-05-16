@@ -1,15 +1,18 @@
 import type { FC } from 'react';
 import { useRef, Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { CheckIcon } from '@heroicons/react/outline';
+import { DocumentTextIcon } from '@heroicons/react/solid';
 import type { Branch } from '../../services/httpService/types';
 import Input from '../Input';
 import type { HttpService } from '../../services/httpService';
+import { useSafeEffect } from '../../hooks/useSafeEffect';
 
 type Props = {
 	item: Branch | null;
 	open: boolean;
 	setOpen: (open: boolean) => void;
+	list: Branch[];
+	setList: (list: Branch[]) => void;
 	httpService: HttpService;
 };
 
@@ -25,7 +28,7 @@ const emptyForm: Branch = {
 };
 
 const EditBranch: FC<Props> = (props) => {
-	const { item, open, setOpen, httpService } = props;
+	const { item, open, setOpen, httpService, list, setList } = props;
 
 	const [form, setForm] = useState<Branch>(emptyForm);
 
@@ -39,13 +42,26 @@ const EditBranch: FC<Props> = (props) => {
 
 	async function save() {
 		if (isEditing) {
-			await httpService.updateBranch(item.id, form);
+			const updated = await httpService.updateBranch(form);
+			const index = list.findIndex((i) => i.id === form.id);
+
+			if (index >= 0) {
+				const newList = [...list];
+				newList[index] = updated;
+				setList(newList);
+			}
 		} else {
-			await httpService.createBranch(form);
+			const created = await httpService.createBranch(form);
+
+			setList([...list, created]);
 		}
 
 		setOpen(false);
 	}
+
+	useSafeEffect(() => {
+		setForm(item || emptyForm);
+	}, [item]);
 
 	return (
 		<Transition.Root show={open} as={Fragment}>
@@ -76,7 +92,10 @@ const EditBranch: FC<Props> = (props) => {
 							<Dialog.Panel className="relative bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full sm:p-6">
 								<div>
 									<div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
-										<CheckIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
+										<DocumentTextIcon
+											className="h-6 w-6 text-green-600"
+											aria-hidden="true"
+										/>
 									</div>
 									<div className="mt-3 sm:mt-5">
 										<Dialog.Title
@@ -95,7 +114,8 @@ const EditBranch: FC<Props> = (props) => {
 															value={form.name}
 															type="text"
 															setter={(value) => setFormData('name', value)}
-															ref={initialFocusRef}
+															reactRef={initialFocusRef}
+															required
 														/>
 													</div>
 
@@ -106,7 +126,7 @@ const EditBranch: FC<Props> = (props) => {
 															value={form.email}
 															type="email"
 															setter={(value) => setFormData('email', value)}
-															ref={initialFocusRef}
+															required
 														/>
 													</div>
 
@@ -117,7 +137,7 @@ const EditBranch: FC<Props> = (props) => {
 															value={form.city}
 															type="text"
 															setter={(value) => setFormData('city', value)}
-															ref={initialFocusRef}
+															required
 														/>
 													</div>
 
@@ -128,7 +148,7 @@ const EditBranch: FC<Props> = (props) => {
 															value={form.address}
 															type="text"
 															setter={(value) => setFormData('address', value)}
-															ref={initialFocusRef}
+															required
 														/>
 													</div>
 
@@ -139,7 +159,7 @@ const EditBranch: FC<Props> = (props) => {
 															value={form.cnpj}
 															type="text"
 															setter={(value) => setFormData('cnpj', value)}
-															ref={initialFocusRef}
+															required
 														/>
 													</div>
 
@@ -150,7 +170,7 @@ const EditBranch: FC<Props> = (props) => {
 															value={form.lat}
 															type="text"
 															setter={(value) => setFormData('lat', value)}
-															ref={initialFocusRef}
+															required
 														/>
 													</div>
 
@@ -161,7 +181,7 @@ const EditBranch: FC<Props> = (props) => {
 															value={form.lng}
 															type="text"
 															setter={(value) => setFormData('lng', value)}
-															ref={initialFocusRef}
+															required
 														/>
 													</div>
 												</div>

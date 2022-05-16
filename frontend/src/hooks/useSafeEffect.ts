@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-export function useSafeEffect(cb: () => void, deps = []) {
+export function useSafeEffect(cb: () => void, deps: any[] = []) {
 	useEffect(() => {
 		let isMounted = true;
 
