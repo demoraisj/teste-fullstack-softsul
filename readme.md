@@ -1,5 +1,7 @@
 # Instruções para roda o projeto (para desenvolvimento)
 
+É necessário as versões LTS do NodeJS, Yarn, PHP (>= 7.4), Composer, Docker e Docker-Compose.
+
  - Execute ```cp .env.example .env && (cd backend && cp .env.example .env)```
  - Execute ```(cd backend && composer install && php artisan key:generate)```
  - Execute ```(cd frontend && yarn install && yarn tailwind:build)```
