@@ -1,12 +1,12 @@
-import { View, Text } from "react-native";
+import {View, Text} from "react-native";
 import { FC } from "react";
 
-const DetailsScreen: FC<Screen> = () => {
-  return (
-    <View>
-      <Text>Login</Text>
-    </View>
-  );
+const DetailsScreen: FC = () => {
+    return (
+        <View>
+            <Text>Login</Text>
+        </View>
+    );
 }
 
 export default DetailsScreen;
