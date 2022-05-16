@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiAuthenticationController;
 use App\Http\Controllers\BranchController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -15,7 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('token', [ApiAuthenticationController::class, 'login']);
+Route::delete('token', [ApiAuthenticationController::class, 'logout']);
+
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::get('/user', function (Request $request) { return $request->user(); });
-    Route::apiResource('/branches', BranchController::class);
+    Route::get('user', function (Request $request) { return $request->user(); });
+    Route::apiResource('branches', BranchController::class);
 });
