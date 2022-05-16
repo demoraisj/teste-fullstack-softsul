@@ -53,12 +53,16 @@ const Root: FC<PageProperties> = (props) => {
 	}
 
 	async function login() {
-		await authService.login({
+		const loggedIn = await authService.login({
 			email: form.email,
 			password: form.password,
 		});
 
-		nav('/dashboard');
+		if (loggedIn) {
+			nav('/dashboard');
+		} else {
+			setError('Email ou senha incorretos.');
+		}
 	}
 	return (
 		<div className="min-h-full h-screen bg-secondary flex flex-col justify-center items-center py-12 sm:px-6 lg:px-8">
