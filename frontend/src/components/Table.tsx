@@ -1,4 +1,6 @@
 import type { FC, Key, ReactNode } from 'react';
+import { SearchIcon } from '@heroicons/react/outline';
+import { useState } from 'react';
 
 type Item = Record<string, unknown>;
 
@@ -17,6 +19,10 @@ type Props = {
 	onEditBtnClick: (item: Item) => void;
 	onDeleteBtnClick: (item: Item) => void;
 	onVisualizeBtnClick: (item: Item) => void;
+	filter: {
+		propName: string;
+		propUserFriendlyName: string;
+	};
 };
 
 const Table: FC<Props> = (props) => {
@@ -29,7 +35,25 @@ const Table: FC<Props> = (props) => {
 		onEditBtnClick,
 		onCreateBtnClick,
 		onVisualizeBtnClick,
+		filter,
 	} = props;
+
+	const [search, setSearch] = useState('');
+
+	function filterItems(list: Item[], searchValue: string) {
+		return list.filter((item) => {
+			const itemValue = item[filter.propName];
+
+			if (typeof itemValue === 'string' || typeof itemValue === 'number') {
+				const treateditemVal = itemValue.toString().toLowerCase().trim();
+				const treatedSearchVal = searchValue.toString().toLowerCase().trim();
+
+				return treateditemVal.includes(treatedSearchVal);
+			}
+
+			return false;
+		});
+	}
 
 	return (
 		<div className="px-4 sm:px-6 lg:px-8">
@@ -47,6 +71,26 @@ const Table: FC<Props> = (props) => {
 					</button>
 				</div>
 			</div>
+
+			<form className="w-full flex md:ml-0 mt-8 border border-dashed rounded-md px-4">
+				<label htmlFor="search-field" className="sr-only">
+					Filtrar filiais por ${filter.propUserFriendlyName.toLowerCase()}
+				</label>
+				<div className="relative w-full text-gray-400 focus-within:text-gray-600">
+					<div className="absolute inset-y-0 left-0 flex items-center pointer-events-none">
+						<SearchIcon className="h-5 w-5" aria-hidden="true" />
+					</div>
+					<input
+						id="search-field"
+						className="block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent sm:text-sm"
+						placeholder={`Filtrar filiais por ${filter.propUserFriendlyName.toLowerCase()}`}
+						type="search"
+						name="search"
+						value={search}
+						onChange={(e) => setSearch(e.target.value)}
+					/>
+				</div>
+			</form>
 
 			{items.length > 0 ? (
 				<div className="mt-8 flex flex-col">
@@ -73,7 +117,7 @@ const Table: FC<Props> = (props) => {
 										</tr>
 									</thead>
 									<tbody className="divide-y divide-gray-200 bg-white">
-										{items.map((item) => (
+										{filterItems(items, search).map((item) => (
 											<tr key={item[useAsKey] as Key}>
 												{columns.map((col) => (
 													<td

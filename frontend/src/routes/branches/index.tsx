@@ -1,5 +1,6 @@
 import type { FC } from 'react';
 import { useState } from 'react';
+import { SearchIcon } from '@heroicons/react/outline';
 import type { PageProperties } from '../../main';
 import type { TableColumn } from '../../components/Table';
 import Table from '../../components/Table';
@@ -80,6 +81,7 @@ const Branches: FC<PageProperties> = (props) => {
 					onEditBtnClick={(i) => actions.edit(i as Branch)}
 					onCreateBtnClick={() => actions.create()}
 					onVisualizeBtnClick={(i) => actions.show(i as Branch)}
+					filter={{ propName: 'name', propUserFriendlyName: 'Nome' }}
 				/>
 			</div>
 
