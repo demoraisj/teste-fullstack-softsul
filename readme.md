@@ -4,7 +4,7 @@
  - Execute ```(cd backend && composer install && php artisan key:generate)```
  - Execute ```(cd frontend && yarn install && yarn tailwind:build)```
  - Execute ```docker-compose up --detach --build```
- - No container 'laravel', execute ```php artisan migrate```
+ - Depois que os container estiverem ativos, execute ```docker exec -it laravel php artisan migrate```
 
 # Bibliotecas utilizadas
 
