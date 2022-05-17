@@ -21,7 +21,7 @@ Se houver conflito de portas, existem configurações no arquivo .env na raíz d
 
 # Bibliotecas utilizadas
 
-O frontend roda em React, o backend em laravel. <br />
+O frontend roda em React, o backend em laravel, e o mobile em React Native, <br />
 Não existem bibliotecas extras no laravel, apenas 'first party' (Como o laravel sanctum e fortify). <br />
 
 No frontend, foram usadas as bibliotecas (além do react):
@@ -33,3 +33,9 @@ No frontend, foram usadas as bibliotecas (além do react):
  - [date-fns](https://date-fns.org/) - para manipulação de datas
  - [react-transition-group](https://reactcommunity.org/react-transition-group/docs) - para animações de transição
  - [svelte](https://svelte.dev/) - para implementação de stores observáveis, apenas. (svelte/store)
+
+No mobile:
+ - [tailwind-rn]() - para estilização
+ - [date-fns](https://date-fns.org/) - para manipulação de datas
+ - [react-navigation](https://reactnavigation.org/) - para navegação
+ - [expo-secure-store](https://docs.expo.dev/versions/latest/sdk/securestore/) - para guardar o token de autenticação da api
