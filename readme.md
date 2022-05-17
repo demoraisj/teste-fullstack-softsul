@@ -1,12 +1,19 @@
 # Instruções para roda o projeto (para desenvolvimento)
 
-É necessário as versões LTS do NodeJS, Yarn, PHP (>= 7.4), Composer, Docker e Docker-Compose.
+É necessário as versões LTS de Localtunnel(npm global), NodeJS, Yarn, PHP (>= 7.4), Composer, Docker e Docker-Compose.
 
  - Execute ```cp .env.example .env && (cd backend && cp .env.example .env)```
  - Execute ```(cd backend && composer install && php artisan key:generate)```
  - Execute ```(cd frontend && yarn install && yarn tailwind:build)```
  - Execute ```docker-compose up --detach --build```
  - Depois que os container estiverem ativos, execute ```docker exec -it laravel php artisan migrate```
+
+## Para a aplicação mobile
+
+- Siga os passos de preparo de ambiente do Expo.
+- Execute ```lt --port 8000``` (Ou qualquer outra porta que você tenha exposto o backend/laravel)
+- Use o endereço obtido na env BACKEND_URL, em ./mobile/.env
+- Execute ```yarn android``` em ./mobile
 
 <br />
 

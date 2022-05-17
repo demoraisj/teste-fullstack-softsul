@@ -10,6 +10,18 @@
   position: relative
 }
 
+.mt-3 {
+  margin-top: 0.75rem
+}
+
+.mt-5 {
+  margin-top: 1.25rem
+}
+
+.mt-4 {
+  margin-top: 1rem
+}
+
 .block {
   display: block
 }
@@ -30,21 +42,115 @@
   height: 100%
 }
 
+.h-screen {
+  height: 100vh
+}
+
+.h-32 {
+  height: 8rem
+}
+
+.w-32 {
+  width: 8rem
+}
+
+.w-full {
+  width: 100%
+}
+
+.w-96 {
+  width: 24rem
+}
+
+.w-48 {
+  width: 12rem
+}
+
+.w-56 {
+  width: 14rem
+}
+
+.w-80 {
+  width: 20rem
+}
+
+.flex-col {
+  flex-direction: column
+}
+
 .items-center {
   align-items: center
+}
+
+.justify-center {
+  justify-content: center
 }
 
 .rounded-full {
   border-radius: 9999px
 }
 
+.rounded-lg {
+  border-radius: 0.5rem
+}
+
+.rounded {
+  border-radius: 0.25rem
+}
+
+.rounded-md {
+  border-radius: 0.375rem
+}
+
 .border {
   border-width: 1px
+}
+
+.border-gray-300 {
+  --tw-border-opacity: 1;
+  border-color: rgb(209 213 219 / var(--tw-border-opacity))
+}
+
+.border-secondary {
+  --tw-border-opacity: 1;
+  border-color: rgb(55 52 53 / var(--tw-border-opacity))
+}
+
+.border-primary {
+  --tw-border-opacity: 1;
+  border-color: rgb(149 196 49 / var(--tw-border-opacity))
+}
+
+.border-transparent {
+  border-color: transparent
 }
 
 .bg-blue-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(191 219 254 / var(--tw-bg-opacity))
+}
+
+.bg-secondary {
+  --tw-bg-opacity: 1;
+  background-color: rgb(55 52 53 / var(--tw-bg-opacity))
+}
+
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity))
+}
+
+.bg-primary {
+  --tw-bg-opacity: 1;
+  background-color: rgb(149 196 49 / var(--tw-bg-opacity))
+}
+
+.p-2 {
+  padding: 0.5rem
+}
+
+.p-5 {
+  padding: 1.25rem
 }
 
 .px-3 {
@@ -57,12 +163,64 @@
   padding-bottom: 0.25rem
 }
 
+.py-12 {
+  padding-top: 3rem;
+  padding-bottom: 3rem
+}
+
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem
+}
+
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem
+}
+
 .pt-12 {
   padding-top: 3rem
 }
 
+.text-center {
+  text-align: center
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem
+}
+
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem
+}
+
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem
+}
+
 .font-semibold {
   font-weight: 600
+}
+
+.font-bold {
+  font-weight: 700
+}
+
+.font-medium {
+  font-weight: 500
 }
 
 .uppercase {
@@ -76,4 +234,36 @@
 .text-blue-800 {
   --tw-text-opacity: 1;
   color: rgb(30 64 175 / var(--tw-text-opacity))
+}
+
+.text-white {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity))
+}
+
+.text-secondary {
+  --tw-text-opacity: 1;
+  color: rgb(55 52 53 / var(--tw-text-opacity))
+}
+
+.text-primary {
+  --tw-text-opacity: 1;
+  color: rgb(149 196 49 / var(--tw-text-opacity))
+}
+
+.text-red-800 {
+  --tw-text-opacity: 1;
+  color: rgb(153 27 27 / var(--tw-text-opacity))
+}
+
+.focus\:border-primary:focus {
+  --tw-border-opacity: 1;
+  border-color: rgb(149 196 49 / var(--tw-border-opacity))
+}
+
+@media (min-width: 640px) {
+  .sm\:text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem
+  }
 }

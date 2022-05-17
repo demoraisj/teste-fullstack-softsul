@@ -7,16 +7,23 @@ import DetailsScreen from "./screens/DetailsScreen";
 import {screens} from "./routing";
 import {TailwindProvider} from 'tailwind-rn';
 import utilities from './tailwind.json';
+import LoadingScreen from "./screens/LoadingScreen";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
     return (
         <TailwindProvider utilities={utilities}>
-            <StatusBar/>
+            <StatusBar backgroundColor="#fff" />
 
             <NavigationContainer>
-                <Stack.Navigator initialRouteName="Entrar">
+                <Stack.Navigator initialRouteName={screens.loading.name}>
+                    <Stack.Screen
+                        name={screens.loading.name}
+                        options={screens.loading.options}
+                        component={LoadingScreen}
+                    />
+
                     <Stack.Screen
                         name={screens.login.name}
                         options={screens.login.options}
