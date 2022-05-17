@@ -1,4 +1,5 @@
 import axios from "axios";
+import { BACKEND_URL } from '@env';
 
 const headers = {
     'Content-Type': 'application/json',
@@ -6,7 +7,7 @@ const headers = {
 };
 
 export const axiosInstance = axios.create({
-    baseURL: 'https://fast-grapes-arrive-200-129-248-2.loca.lt',
+    baseURL: BACKEND_URL,
     withCredentials: true,
     headers,
 });

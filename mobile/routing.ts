@@ -6,6 +6,7 @@ export const screens = {
     options: {
       title: 'Carregando',
       headerShown: false,
+      headerBackVisible: false,
     },
   },
 
@@ -14,6 +15,7 @@ export const screens = {
     options: {
       title: 'Entrar',
       headerShown: false,
+      headerBackVisible: false,
     },
   },
 
@@ -21,6 +23,7 @@ export const screens = {
     name: "List",
     options: {
       title: 'Lista de Filiais',
+      headerBackVisible: false,
     },
   },
 

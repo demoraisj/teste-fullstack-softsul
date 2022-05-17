@@ -3,8 +3,9 @@ import {FC, useState} from "react";
 import {useTailwind} from 'tailwind-rn';
 import {SafeAreaView} from "react-native-safe-area-context";
 import {screens} from "../routing";
-import {useNavigation} from "@react-navigation/native";
+import {NavigationProp, useNavigation} from "@react-navigation/native";
 import {httpGetToken} from "../services/http";
+import {RootStackParamList} from "../App";
 
 const LoginScreen: FC = () => {
     const [inputStyle, setInputStyle] = useState({
@@ -18,7 +19,7 @@ const LoginScreen: FC = () => {
     const [password, onChangePassword] = useState('');
 
     const tw = useTailwind();
-    const navidation = useNavigation();
+    const navidation = useNavigation<NavigationProp<RootStackParamList>>();
 
     async function login() {
         if (!email || !password) {
@@ -29,8 +30,12 @@ const LoginScreen: FC = () => {
         const ok = await httpGetToken({email, password});
 
         if (ok) {
-            // @ts-ignore
-            navidation.navigate({ name: screens.list.name });
+            navidation.navigate({
+                name: screens.list.name,
+                params: {
+                    id: undefined,
+                }
+            });
         } else {
             setError('Usuário ou senha inválidos.');
         }

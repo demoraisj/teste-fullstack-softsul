@@ -1,5 +1,5 @@
 import {StatusBar} from 'expo-status-bar';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, ParamListBase, useRoute} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoginScreen from "./screens/LoginScreen";
 import ListScreen from "./screens/ListScreen";
@@ -8,13 +8,21 @@ import {screens} from "./routing";
 import {TailwindProvider} from 'tailwind-rn';
 import utilities from './tailwind.json';
 import LoadingScreen from "./screens/LoadingScreen";
+import {useEffect} from "react";
+import {Alert, BackHandler} from "react-native";
 
-const Stack = createNativeStackNavigator();
+export interface RootStackParamList extends ParamListBase {
+    Details: {
+        id: number
+    }
+}
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
     return (
         <TailwindProvider utilities={utilities}>
-            <StatusBar backgroundColor="#fff" />
+            <StatusBar backgroundColor="#fff" networkActivityIndicatorVisible />
 
             <NavigationContainer>
                 <Stack.Navigator initialRouteName={screens.loading.name}>
