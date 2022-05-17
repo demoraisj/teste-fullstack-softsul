@@ -36,6 +36,6 @@ No frontend, foram usadas as bibliotecas (além do react):
 
 No mobile:
  - [tailwind-rn]() - para estilização
- - [date-fns](https://date-fns.org/) - para manipulação de datas
+ - [axios](https://axios-http.com/ptbr/) - para requisições http
  - [react-navigation](https://reactnavigation.org/) - para navegação
  - [expo-secure-store](https://docs.expo.dev/versions/latest/sdk/securestore/) - para guardar o token de autenticação da api
