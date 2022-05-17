@@ -1,4 +1,4 @@
-# Instruções para roda o projeto (para desenvolvimento)
+# Instruções para rodar o projeto (para desenvolvimento)
 
 É necessário as versões LTS de Localtunnel(npm global), NodeJS, Yarn, PHP (>= 7.4), Composer, Docker e Docker-Compose.
 
@@ -6,7 +6,7 @@
  - Execute ```(cd backend && composer install && php artisan key:generate)```
  - Execute ```(cd frontend && yarn install && yarn tailwind:build)```
  - Execute ```docker-compose up --detach --build```
- - Depois que os container estiverem ativos, execute ```docker exec -it laravel php artisan migrate```
+ - Depois que os containers estiverem ativos, execute ```docker exec -it laravel php artisan migrate```
 
 ## Para a aplicação mobile
 
