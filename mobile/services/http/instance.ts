@@ -6,7 +6,7 @@ const headers = {
 };
 
 export const axiosInstance = axios.create({
-    baseURL: 'https://smart-dancers-yawn-200-129-248-2.loca.lt',
+    baseURL: 'https://fast-grapes-arrive-200-129-248-2.loca.lt',
     withCredentials: true,
     headers,
 });
