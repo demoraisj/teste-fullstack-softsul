@@ -1,4 +1,6 @@
-# Instruções para rodar o projeto (para desenvolvimento)
+# Teste de execução de código para a empresa [SoftSul Sistemas](http://www.softsulsistemas.com.br/)
+
+## Instruções para rodar o projeto (para desenvolvimento)
 
 É necessário as versões LTS do NodeJS, Yarn, PHP (>= 7.4), Composer, Docker e Docker-Compose.
 
@@ -8,7 +10,7 @@
  - Execute ```docker-compose up --detach --build```
  - Depois que os containers estiverem ativos, execute ```docker exec -it laravel php artisan migrate```
 
-## Para a aplicação mobile
+### Para a aplicação mobile
 
 - Instale o expo-cli e localtunnel globalmente ```yarn global add expo-cli localtunnel```
 - Execute ```lt --port 8000``` (Ou qualquer outra porta que você tenha exposto o backend/laravel)
@@ -19,7 +21,7 @@
 
 Se houver conflito de portas, existem configurações no arquivo .env na raíz dessse proeto que podem ser alteradas, rode um down e novamente um up no docker-compose em seguida.
 
-# Bibliotecas utilizadas
+## Bibliotecas utilizadas
 
 O frontend roda em React, o backend em laravel, e o mobile em React Native, <br />
 Não existem bibliotecas extras no laravel, apenas 'first party' (Como o laravel sanctum e fortify). <br />
