@@ -2,22 +2,20 @@
 
 ## Instruções para rodar o projeto (para desenvolvimento)
 
-É necessário as versões LTS do NodeJS, Yarn, PHP (>= 7.4), Composer, Docker e Docker-Compose.
+É necessário as versões LTS do Docker e Docker-Compose.
 
- - Execute ```cp .env.example .env && (cd backend && cp .env.example .env)```
- - Execute ```(cd backend && composer install && php artisan key:generate)```
- - Execute ```(cd frontend && yarn install && yarn tailwind:build)```
- - Execute ```docker-compose up --detach --build```
- - Depois que os containers estiverem ativos, execute ```docker exec -it laravel php artisan migrate```
+- Execute ```cp .env.example .env && (cd backend && cp .env.example .env) && (cd mobile && cp .env.example .env)```
+- Verifique as variáveis e ajuste ao seu ambiente se necessário. (Uma chave para a API Google Maps é necessária para mostrar os mapas no frontend web)
+- Execute ```docker-compose up --detach``` e de um tempo até que todos os scripts nos containers tenham sido executados.
 
 ### Para a aplicação mobile
 
-- Instale o expo-cli e localtunnel globalmente ```yarn global add expo-cli localtunnel```
+ - Instale o expo-cli e localtunnel globalmente ```yarn global add expo-cli localtunnel```
  - Execute ```(cd mobile && cp .env.example .env)```
-- Execute ```sudo lt --port 8000 --local-host "127.0.0.1"``` (Ou qualquer outra porta que você tenha exposto o backend/laravel)
-- Use o endereço obtido na env BACKEND_URL, em ./mobile/.env
-- Execute ```yarn install``` em ./mobile
-- Execute ```yarn start``` em ./mobile e connecte-se ao seu aplicativo expo go no seu dispositivo mobile.
+ - Execute ```sudo lt --port 8000 --local-host "127.0.0.1"``` (Ou qualquer outra porta que você tenha exposto o backend/laravel)
+ - Use o endereço obtido na env BACKEND_URL, em ./mobile/.env
+ - Execute ```yarn install``` em ./mobile
+ - Execute ```yarn start``` em ./mobile e connecte-se ao seu aplicativo expo go no seu dispositivo mobile.
 
 <br />
 

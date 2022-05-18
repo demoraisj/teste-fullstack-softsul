@@ -1,5 +1,5 @@
-# For more information: https://laravel.com/docs/sail
 version: '3.9'
+
 services:
     laravel:
         container_name: laravel
@@ -15,11 +15,13 @@ services:
             DB_PORT: 3306
             APP_ENV: local
         volumes:
+            - './docker/laravel-entrypoint.sh:/opt/bitnami/scripts/laravel/entrypoint.sh'
             - './backend:/app'
         networks:
             - default
         depends_on:
             - mysql
+        restart: unless-stopped
     mysql:
         container_name: mysql
         image: 'mysql/mysql-server:8.0'
@@ -29,7 +31,6 @@ services:
             - .env
         environment:
             MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
-            MYSQL_ROOT_HOST: "%"
             MYSQL_DATABASE: '${DB_DATABASE}'
             MYSQL_USER: '${DB_USERNAME}'
             MYSQL_PASSWORD: '${DB_PASSWORD}'
@@ -42,11 +43,12 @@ services:
             test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
             retries: 3
             timeout: 5s
+        restart: unless-stopped
     react:
-        container_name: frontend
+        container_name: react
         working_dir: /app
         image: 'node:16.15-alpine'
-        command: yarn run dev
+        entrypoint: sh /scripts/entrypoint.sh
         depends_on:
             - laravel
         env_file:
@@ -56,7 +58,9 @@ services:
         environment:
             - NODE_ENV=development
         volumes:
-            - ./frontend:/app
+            - './docker/react-entrypoint.sh:/scripts/entrypoint.sh'
+            - './frontend:/app'
+        restart: unless-stopped
 networks:
     default:
         driver: bridge
