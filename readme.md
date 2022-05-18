@@ -13,8 +13,10 @@
 ### Para a aplicação mobile
 
 - Instale o expo-cli e localtunnel globalmente ```yarn global add expo-cli localtunnel```
-- Execute ```lt --port 8000``` (Ou qualquer outra porta que você tenha exposto o backend/laravel)
+ - Execute ```(cd mobile && cp .env.example .env)```
+- Execute ```sudo lt --port 8000 --local-host "127.0.0.1"``` (Ou qualquer outra porta que você tenha exposto o backend/laravel)
 - Use o endereço obtido na env BACKEND_URL, em ./mobile/.env
+- Execute ```yarn install``` em ./mobile
 - Execute ```yarn start``` em ./mobile e connecte-se ao seu aplicativo expo go no seu dispositivo mobile.
 
 <br />
