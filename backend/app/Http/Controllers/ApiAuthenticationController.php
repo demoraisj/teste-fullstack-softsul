@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 
 class ApiAuthenticationController
 {
-    public function login(Request $request): \Illuminate\Http\JsonResponse
+    public function store(Request $request): \Illuminate\Http\JsonResponse
     {
         $credentials = $request->validate([
             'email' => 'required|email',
@@ -30,7 +30,7 @@ class ApiAuthenticationController
         return response()->json(['token' => $token]);
     }
 
-    public function logout(): \Illuminate\Http\JsonResponse
+    public function destroy(): \Illuminate\Http\JsonResponse
     {
         $user = auth('sanctum')->user();
 

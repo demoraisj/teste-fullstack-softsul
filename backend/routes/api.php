@@ -16,8 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('token', [ApiAuthenticationController::class, 'login']);
-Route::delete('token', [ApiAuthenticationController::class, 'logout']);
+Route::apiResource('token', ApiAuthenticationController::class)->only(['store', 'destroy']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('user', function (Request $request) { return $request->user(); });
