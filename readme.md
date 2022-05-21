@@ -1,8 +1,10 @@
 # Teste de execução de código para a empresa [SoftSul Sistemas](http://www.softsulsistemas.com.br/)
 
+--> Maio de 2022.
+
 ## Instruções para rodar o projeto (para desenvolvimento)
 
-É necessário as versões LTS do Docker e Docker-Compose.
+É necessário as versões LTS (maio 2022) do Docker e Docker-Compose.
 
 - Execute ```cp .env.example .env && (cd backend && cp .env.example .env) && (cd mobile && cp .env.example .env)```
 - Verifique as variáveis e ajuste ao seu ambiente se necessário. (Uma chave para a API Google Maps é necessária para mostrar os mapas no frontend web)
